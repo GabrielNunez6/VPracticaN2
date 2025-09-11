@@ -5,7 +5,7 @@
 #include "aleatorio.h"
 
 int main() {
-
+    initAleatorio();
     int dado1=lanzarDado();
     int dado2=lanzarDado();
     int dado3=lanzarDado();
