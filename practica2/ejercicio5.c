@@ -2,7 +2,7 @@
 #include "aleatorio.h"
 
 int main() {
-
+    initAleatorio();
     int dado = lanzarDado();
     printf("El dado cayo en: %d\n", dado);
     switch (dado) {
@@ -21,6 +21,7 @@ int main() {
             printf("R\n");
             break;
         default:
+            printf("ese valor de dado no existe");
     }
 
     return 0;
