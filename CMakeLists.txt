@@ -24,3 +24,8 @@ add_executable(ejercicio4
         practica2/ejercicio4.c
         practica2/aleatorio.c
 )
+# Ejercicio 5
+add_executable(ejercicio5
+        practica2/ejercicio5.c
+        practica2/aleatorio.c
+)
