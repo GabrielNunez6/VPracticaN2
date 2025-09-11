@@ -2,7 +2,7 @@
 #include "aleatorio.h"
 
 int main() {
-
+    initAleatorio();
     int d1 = lanzarDado();
     int d2 = lanzarDado();
     int d3 = lanzarDado();
