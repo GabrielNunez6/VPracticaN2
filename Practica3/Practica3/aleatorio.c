@@ -162,3 +162,19 @@ void crearCartaCambio(int numero, char palo) {
 
     }
 }
+void mostrarCarta(int numero, char palo){
+    switch(numero){
+        case 1: printf("A"); break;
+        case 11: printf("J"); break;
+        case 12: printf("Q"); break;
+        case 13: printf("K"); break;
+        default: printf("%d", numero);
+    }
+    switch(palo){
+        case 'T': printf(" de Trebol"); break;
+        case 'C': printf(" de Corazon"); break;
+        case 'P': printf(" de Picas"); break;
+        case 'D': printf(" de Diamante"); break;
+    }
+    printf("\n");
+}
