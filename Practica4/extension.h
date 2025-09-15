@@ -7,7 +7,8 @@
 #define ALEATORIO_H
 #include <stdlib.h>
 #include <time.h>
-float perimetroTriangulo(float a, float b, float c);
-
+#include <stdbool.h>
+float perimetroTriangulo(float lado1, float lado2, float lado3);
+bool esTriangulo(float lado1, float lado2, float lado3);
 
 #endif //ALEATORIO_H
