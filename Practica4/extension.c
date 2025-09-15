@@ -17,3 +17,17 @@ bool esTriangulo(float lado1, float lado2, float lado3) {
         return false;
     }
 }
+//Escribe una función que reciba la medida de los lados
+//de un triángulo y regresa true si forman un triángulo equilátero.
+bool esTrianguloEquilatero(float lado1, float lado2, float lado3) {
+    if (lado1==lado2 && lado2==lado3) {
+        return true;
+    }
+}
+//Escribe una función que reciba la medida de los lados
+//de un triángulo y regresa true si forman un triángulo escaleno
+bool esTrianguloEscaleno(float lado1, float lado2, float lado3) {
+    if ((lado1 != lado2 && lado2 != lado3 && lado1 != lado3) && (lado1 + lado2 > lado3 && lado1 + lado3 > lado2 && lado2 + lado3 > lado1)) {
+        return true;
+        }
+}
