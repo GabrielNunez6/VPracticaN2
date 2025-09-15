@@ -1,44 +1,31 @@
 #include <stdio.h>
 
 int main() {
-    int palo, valor;
+    int palo = 1;
+    int valor;
 
-    for (palo = 1; palo <= 4; palo++) {
-        switch (palo) {
-            case 1:
-                printf("=== Corazones ===\n");
-                break;
-            case 2:
-                printf("=== Diamantes ===\n");
-                break;
-            case 3:
-                printf("=== Treboles ===\n");
-                break;
-            case 4:
-                printf("=== Picas ===\n");
-                break;
-        }
+    while (palo <= 4) {
         for (valor = 1; valor <= 13; valor++) {
-
-            switch (valor) {
-                case 1:
-                    printf("A ");
-                    break;
-                case 11:
-                    printf("J ");
-                    break;
-                case 12:
-                    printf("Q ");
-                    break;
-                case 13:
-                    printf("K ");
-                    break;
-                default:
-                    printf("%d ", valor);
-                    break;
-            }
+            if (valor == 1)
+                printf("A de ");
+            else if (valor == 11)
+                printf("J de ");
+            else if (valor == 12)
+                printf("Q de ");
+            else if (valor == 13)
+                printf("K de ");
+            else
+                printf("%d de ", valor);
+            if (palo == 1)
+                printf("Corazon\n");
+            else if (palo == 2)
+                printf("Diamante\n");
+            else if (palo == 3)
+                printf("Trebol\n");
+            else if (palo == 4)
+                printf("Picas\n");
         }
-        printf("\n");
+        palo++;
     }
 
     return 0;
