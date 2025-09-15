@@ -5,28 +5,28 @@ int main() {
     int valor;
 
     while (palo <= 4) {
+        if (palo == 1)
+            printf("\n=== Corazon ===\n");
+        else if (palo == 2)
+            printf("\n=== Diamante ===\n");
+        else if (palo == 3)
+            printf("\n=== Trebol ===\n");
+        else if (palo == 4)
+            printf("\n=== Picas ===\n");
+
         for (valor = 1; valor <= 13; valor++) {
             if (valor == 1)
-                printf("A de ");
+                printf("A ");
             else if (valor == 11)
-                printf("J de ");
+                printf("J ");
             else if (valor == 12)
-                printf("Q de ");
+                printf("Q ");
             else if (valor == 13)
-                printf("K de ");
+                printf("K ");
             else
-                printf("%d de ", valor);
-            if (palo == 1)
-                printf("Corazon\n");
-            else if (palo == 2)
-                printf("Diamante\n");
-            else if (palo == 3)
-                printf("Trebol\n");
-            else if (palo == 4)
-                printf("Picas\n");
+                printf("%d ", valor);
         }
+        printf("\n");
         palo++;
     }
-
-    return 0;
 }
