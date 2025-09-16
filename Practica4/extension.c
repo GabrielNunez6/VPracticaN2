@@ -5,6 +5,8 @@
 //función que reciba la medida de los lados de un triángulo
 //y regrese la medida de su perímetro.
 
+#include <math.h>
+
 float perimetroTriangulo(float lado1, float lado2, float lado3) {
     return lado1 + lado2 + lado3;
 }
@@ -31,8 +33,17 @@ bool esTrianguloEscaleno(float lado1, float lado2, float lado3) {
         return true;
         }
 }
+//Escribe una función que reciba la medida de los lados
+//de un triángulo y regresa true si forman un triángulo isosceles
 bool esTrianguloIsosceles(float lado1, float lado2, float lado3) {
     if ((lado1==lado2 && lado1==lado3 && lado2==lado3) && (lado1 + lado2 > lado3 && lado1 + lado3 > lado2 && lado2 + lado3 > lado1)){
     return true;
 }
+}
+//Escribe una función que reciba la medida de los
+//lados de un triángulo y regrese la medida de su área.
+float areaTriangulo(float lado1, float lado2, float lado3) {
+    float semiperimetro=(lado1+lado2+lado3)/2;
+    float area= sqrt(semiperimetro*(semiperimetro-lado1)*(semiperimetro-lado2)*(semiperimetro-lado3));
+    return area;
 }
