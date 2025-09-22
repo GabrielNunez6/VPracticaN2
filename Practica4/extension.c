@@ -1,49 +1,33 @@
-//
-// Created by Gabriel Nunez Saldana on 9/15/2025.
-//
-
-//función que reciba la medida de los lados de un triángulo
-//y regrese la medida de su perímetro.
-
+#include "extension.h"
 #include <math.h>
 
+// Verifica si los lados forman un triángulo
+bool esTriangulo(float lado1, float lado2, float lado3) {
+    return (lado1 + lado2 > lado3 && lado1 + lado3 > lado2 && lado2 + lado3 > lado1);
+}
+
+// Equilátero: todos los lados iguales
+bool esTrianguloEquilatero(float lado1, float lado2, float lado3) {
+    return (lado1 == lado2 && lado2 == lado3);
+}
+
+// Escaleno: todos los lados distintos y válido
+bool esTrianguloEscaleno(float lado1, float lado2, float lado3) {
+    return esTriangulo(lado1, lado2, lado3) && (lado1 != lado2 && lado2 != lado3 && lado1 != lado3);
+}
+
+// Isósceles: al menos dos lados iguales y válido
+bool esTrianguloIsosceles(float lado1, float lado2, float lado3) {
+    return esTriangulo(lado1, lado2, lado3) && ((lado1 == lado2 && lado1 != lado3) || (lado1 == lado3 && lado1 != lado2) || (lado2 == lado3 && lado2 != lado1));
+}
+
+// Calcula el área usando fórmula de Herón
+float areaTriangulo(float lado1, float lado2, float lado3) {
+    float s = (lado1 + lado2 + lado3) / 2;
+    return sqrt(s * (s - lado1) * (s - lado2) * (s - lado3));
+}
+
+// Calcula el perímetro
 float perimetroTriangulo(float lado1, float lado2, float lado3) {
     return lado1 + lado2 + lado3;
-}
-//función que reciba la medida de los lados de un triángulo y
-//regresa true si los lados forman un triángulo y false si no
-bool esTriangulo(float lado1, float lado2, float lado3) {
-    if (lado1 + lado2 > lado3 && lado1 + lado3 > lado2 && lado2 + lado3 > lado1) { //La suma de dos lados debe ser mayor al lado restante
-        return true;
-    } else {
-        return false;
-    }
-}
-//Escribe una función que reciba la medida de los lados
-//de un triángulo y regresa true si forman un triángulo equilátero.
-bool esTrianguloEquilatero(float lado1, float lado2, float lado3) {
-    if (lado1==lado2 && lado2==lado3) {
-        return true;
-    }
-}
-//Escribe una función que reciba la medida de los lados
-//de un triángulo y regresa true si forman un triángulo escaleno
-bool esTrianguloEscaleno(float lado1, float lado2, float lado3) {
-    if ((lado1 != lado2 && lado2 != lado3 && lado1 != lado3) && (lado1 + lado2 > lado3 && lado1 + lado3 > lado2 && lado2 + lado3 > lado1)) {
-        return true;
-        }
-}
-//Escribe una función que reciba la medida de los lados
-//de un triángulo y regresa true si forman un triángulo isosceles
-bool esTrianguloIsosceles(float lado1, float lado2, float lado3) {
-    if ((lado1==lado2 && lado1==lado3 && lado2==lado3) && (lado1 + lado2 > lado3 && lado1 + lado3 > lado2 && lado2 + lado3 > lado1)){
-    return true;
-}
-}
-//Escribe una función que reciba la medida de los
-//lados de un triángulo y regrese la medida de su área.
-float areaTriangulo(float lado1, float lado2, float lado3) {
-    float semiperimetro=(lado1+lado2+lado3)/2;
-    float area= sqrt(semiperimetro*(semiperimetro-lado1)*(semiperimetro-lado2)*(semiperimetro-lado3));
-    return area;
 }
