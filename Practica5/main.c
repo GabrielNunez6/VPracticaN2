@@ -11,7 +11,6 @@ int main() {
         mostrarMenu();
         opcion = OpcionLetra('a', 'g');
 
-
         switch(opcion) {
             case 'a': // Rectángulo pide alto y largo
                 printf("Introduce la altura: ");
@@ -34,12 +33,22 @@ int main() {
                 printf("Introduce el tamano del triangulo: ");
                 scanf("%d", &tamano);
                 figura4(tamano);
+                break;
+            case 'e':
+                printf("Introduce el tamano del triangulo: ");
+                scanf("%d", &tamano);
+                figura5(tamano);
+                break;
+            case 'f':
+                printf("Introduce el tamano del triangulo: ");
+                scanf("%d", &tamano);
+                figura6(tamano);
+                break;
             case 'g':
                 printf("Salir\n");
                 break;
         }
 
     } while(opcion != 'g');
-
     return 0;
 }

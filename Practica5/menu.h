@@ -9,4 +9,6 @@ void figura1(int alto, int largo);
 void figura2(int tamano);
 void figura3(int tamano);
 void figura4(int tamano);
+void figura5(int tamano);
+void figura6(int tamano);
 #endif //PRACTICA_MENU_H
