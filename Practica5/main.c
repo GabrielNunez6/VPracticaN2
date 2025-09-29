@@ -4,7 +4,7 @@
 
 int main() {
     char opcion;
-    int n;
+    int tamano;
     int alto, largo;
 
     do {
@@ -20,7 +20,20 @@ int main() {
                 scanf("%d", &largo);
                 figura1(alto, largo);
                 break;
-
+            case 'b':
+                printf("Introduce el tamaño del triángulo: ");
+                scanf("%d", &tamano);
+                figura2(tamano);
+                break;
+            case 'c':
+                printf("Introduce el tamaño del triángulo: ");
+                scanf("%d", &tamano);
+                figura3(tamano);
+                break;
+            case 'd':
+                printf("Introduce el tamano del triangulo: ");
+                scanf("%d", &tamano);
+                figura4(tamano);
             case 'g':
                 printf("Salir\n");
                 break;
