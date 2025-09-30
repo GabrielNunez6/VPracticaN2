@@ -5,9 +5,10 @@
 
 
 int main() {
-    initAleatorio();
+
     int d1=0, d2=0, d3=0, d4=0, d5=0;
     int opcion;
+    int suma;
 
     do {
         MenuCombinaciones();
@@ -15,11 +16,11 @@ int main() {
 
         switch(opcion) {
             case 1: //Lanzar los 5 dados
-                d1 = lanzarDado();
-                d2 = lanzarDado();
-                d3 = lanzarDado();
-                d4 = lanzarDado();
-                d5 = lanzarDado();
+                d1 = 1;
+                d2 = 1;
+                d3 = 1;
+                d4 = 1;
+                d5 = 1;
                 printf("Dados lanzados.\n");
                 break;
             case 2: //Muestra los 5 dados lanzados
@@ -27,8 +28,10 @@ int main() {
                 break;
             case 3:
                 if (sumaSiIguales(d1, d2, d3, d4, d5)) {
-                   return d1 + d2 + d3 + d4 + d5;
-                } else {
+                   printf("\nBalut!");
+                    printf("\nLa suma fue %d\n", sumaSiIguales(d1,d2, d3, d4, d5));
+                }
+                else {
                     return 0;
                 }
                 break;
