@@ -14,10 +14,10 @@ int main() {
         switch(opcion) {
             case 1: // Lanzar los 5 dados
                 d1 = 1;
-                d2 = 2;
-                d3 = 3;
-                d4 = 4;
-                d5 = 5;
+                d2 = 1;
+                d3 = 1;
+                d4 = 2;
+                d5 = 2;
                 printf("Dados lanzados.\n");
                 break;
 
@@ -27,8 +27,7 @@ int main() {
 
             case 3: // Balut
                 if (sumaSiIguales(d1, d2, d3, d4, d5)) {
-                    printf("\nBalut!");
-                    printf("\nLa suma fue %d\n", sumaSiIguales(d1,d2, d3, d4, d5));
+                    printf("\nBalut! La suma fue %d, Puntos:30\n", sumaSiIguales(d1,d2, d3, d4, d5));
                 } else {
                     printf("No hay Balut.\n");
                 }
@@ -42,6 +41,15 @@ int main() {
                     printf("No forman secuencia.\n");
                 }
                 break;
+            case 5: { // Full House
+                int full = sumaSiFullHouse(d1,d2,d3,d4,d5);
+                if (full) {
+                    printf("Full House! Suma: %d. Puntos: 28\n", full);
+                } else {
+                    printf("No hay Full House.\n");
+                }
+                break;
+            }
 
             case 7: // Termina el programa
                 printf("Terminar\n");
