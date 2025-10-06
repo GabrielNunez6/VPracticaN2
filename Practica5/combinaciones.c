@@ -1,8 +1,6 @@
 #include <stdio.h>
 
-
-
-
+//Funcion que muestra un menu de opciones para un juego de Balut
 void MenuCombinaciones() {
  printf("  -- MENU ---\n");
  printf("1. Lanzar 5 dados\n");
@@ -27,7 +25,9 @@ int suma = d1 + d2 + d3 + d4 + d5;
 }
 
 
-//2)
+//2)// Función que recibe 5 dados, que mediante varios if
+//verifica combinaciones de 3 dados iguales y
+//regresa la suma si hay coincidencia, sino 0
 int sumaTresIguales(int d1, int d2, int d3, int d4, int d5) {
  if (d1 == d2 && d1 == d3)
    return d1 + d2 + d3;
@@ -84,10 +84,12 @@ return 0;
 
 
 
-//5)
+//5)// Función que recibe 5 dados, que mediante varios if donde compara a tres
+//dados iguales y dos dados iguales y asegura que al final sean distintos y
+//regresa la suma de los 5 dados si se cumple, sino 0
+
 int sumaSiHayFullHouse(int d1, int d2, int d3, int d4, int d5) {
 int suma = d1 + d2 + d3 + d4 + d5;
-
 
 if ((d1 == d2 && d1 == d3 && d4 == d5 && d4 != d1) ||
  (d1 == d2 && d1 == d4 && d3 == d5 && d3 != d1) ||
@@ -105,7 +107,8 @@ if ((d1 == d2 && d1 == d3 && d4 == d5 && d4 != d1) ||
  }
 }
 
-
+//6)// Función que recibe 5 dados, que mediante ifs ordena los dados de mayor a menor
+//y verifica secuencia baja 1-5, regresa 15 si se cumple, sino 0
 int esSecuenciaBaja(int d1, int d2, int d3, int d4, int d5) {
  int temp;
 
@@ -167,7 +170,9 @@ int esSecuenciaBaja(int d1, int d2, int d3, int d4, int d5) {
  else
    return 0;
 }
-
+// Función que recibe 5 dados, que mediante ifs ordena los dados de mayor a menor y
+// verifica secuencia alta 2-6,
+// regresa 20 si se cumple, sino 0
 int esSecuenciaAlta(int d1, int d2, int d3, int d4, int d5) {
   int temp;
 
@@ -231,7 +236,8 @@ int esSecuenciaAlta(int d1, int d2, int d3, int d4, int d5) {
 }
 
 
-//6)
+//6)/ Función que recibe 5 dados, que mediante ifs revisa cada dado y si ese dado vale uno
+//suma todos los unos y regresa la suma
 int sumaDeUno(int d1, int d2, int d3, int d4, int d5) {
 int suma = 0;
 
@@ -249,7 +255,8 @@ if (d5 == 1)
 return suma; // si no hay ningun 2, suma seguirá siendo 0
 }
 
-//7
+//7)Función que recibe 5 dados, que mediante ifs revisa cada dado y si ese dado vale dos
+//suma todos los dos y regresa la suma
 int sumaDeDos(int d1, int d2, int d3, int d4, int d5) {
  int suma = 0;
 
@@ -268,7 +275,8 @@ int sumaDeDos(int d1, int d2, int d3, int d4, int d5) {
 }
 
 
-//8)
+//8)Función que recibe 5 dados, que mediante ifs revisa cada dado y si ese dado vale tres
+//suma todos los tres y regresa la suma
 int sumaDeTres(int d1, int d2, int d3, int d4, int d5) {
  int suma = 0;
 
@@ -288,6 +296,8 @@ int sumaDeTres(int d1, int d2, int d3, int d4, int d5) {
 
 
 
+//9)Función que recibe 5 dados, que mediante ifs revisa cada dado y si ese dado vale cuatro
+//suma todos los cuatros y regresa la suma
 
 int sumaDeCuatro(int d1, int d2, int d3, int d4, int d5) {
  int suma = 0;
@@ -308,7 +318,8 @@ int sumaDeCuatro(int d1, int d2, int d3, int d4, int d5) {
 
 
 
-
+//10)Función que recibe 5 dados, que mediante ifs revisa cada dado y si ese dado vale cinco
+//suma todos los cinco y regresa la suma
 int sumaDeCinco(int d1, int d2, int d3, int d4, int d5) {
  int suma = 0;
 
@@ -328,7 +339,8 @@ int sumaDeCinco(int d1, int d2, int d3, int d4, int d5) {
 
 
 
-
+//11)Función que recibe 5 dados, que mediante ifs revisa cada dado y si ese dado vale seis
+//suma todos los seis y regresa la suma
 int sumaDeSeis(int d1, int d2, int d3, int d4, int d5) {
  int suma = 0;
 
