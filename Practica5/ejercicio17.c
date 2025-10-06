@@ -13,11 +13,11 @@ int main() {
 
         switch (opcion) {
             case 1: // Lanzar los 5 dados
-                d1 = 1;
-                d2 = 1;
-                d3 = 1;
-                d4 = 2;
-                d5 = 2;
+                d1 = 2;
+                d2 = 3;
+                d3 = 4;
+                d4 = 5;
+                d5 = 6;
                 printf("Dados lanzados.\n");
                 break;
 
@@ -27,16 +27,15 @@ int main() {
 
             case 3: // Balut
                 if (sumaSiIguales(d1, d2, d3, d4, d5)) {
-                    printf("\nBalut! La suma fue %d, Puntos: 30\n", sumaSiIguales(d1, d2, d3, d4, d5));
+                    printf("\nBalut!  Puntos: 30\n");
                 } else {
                     printf("No hay Balut.\n");
                 }
                 break;
 
             case 4: { // Full House
-                int full = sumaSiHayFullHouse(d1, d2, d3, d4, d5);
-                if (full) {
-                    printf("Full House! Suma: %d. Puntos: 28\n", full);
+                if (sumaSiHayFullHouse(d1, d2, d3, d4, d5)) {
+                    printf("Full House!  Puntos: 28\n");
                 } else {
                     printf("No hay Full House.\n");
                 }
@@ -45,14 +44,21 @@ int main() {
 
             case 5: // Secuencia baja (1 al 5)
                 if (esSecuenciaBaja(d1, d2, d3, d4, d5)) {
-                    printf("Hay una secuencia baja (1 al 5)\n");
+                    printf("Hay una secuencia baja (1 al 5) - Puntos: 15\n");
                 } else {
                     printf("No hay secuencia baja.\n");
                 }
                 break;
+            case 6: // Secuencia alta (2 al 6)
+                if (esSecuenciaAlta(d1, d2, d3, d4, d5)) {
+                    printf("Hay una secuencia alta (2 al 6) - Puntos: 20\n");
+                } else {
+                    printf("No hay secuencia alta.\n");
+                }
+                break;
 
             case 7: // Terminar el programa
-                printf("Programa terminado.\n");
+                printf("Terminar.\n");
                 break;
 
         }
