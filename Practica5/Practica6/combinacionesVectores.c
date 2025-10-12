@@ -32,3 +32,25 @@ int sumaSiTresIgualesVectores(int numeros[], int tamaño) {
         }
     }
 }
+
+//3)
+int sumaSiDosIgualesVectores(int numeros[], int tamaño) {
+    for (int i = 0; i < tamaño; i++) {
+        int contador = 0;
+        for (int j = 0; j < tamaño; j++) {
+            if (numeros[j] == numeros[i])
+                contador++;
+        }
+        if (contador >= 2) {
+            int suma = 0;
+            for (int k = 0; k < tamaño; k++) {
+                if (numeros[k] == numeros[i])
+                    suma += numeros[k];
+            }
+            return suma;
+        }
+    }
+    return 0;
+}
+
+//4)
