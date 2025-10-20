@@ -117,7 +117,33 @@ int main() {
     }
 
     int totalPointsFinal = pointsFours + pointsFives + pointsSixes + pointsStraights + pointsFull + pointsChoice + bonusPoints;
+    // ====================== IMPRESIÓN DE LA HOJA ======================
+    printf("=====================================================\n");
+    printf("                       BALUT                         \n");
+    printf("NAME: %s \n", nombre);
+    printf("=====================================================\n\n");
 
+    printf("          |  R1 |  R2 |  R3 |  R4 | SCORE | POINTS\n");
+    printf("----------------------------------------------------\n");
+    printf("FOURS     | %3d | %3d | %3d | %3d |  %3d  |  %2d\n",
+           fours[0], fours[1], fours[2], fours[3], sumFours, pointsFours);
+    printf("FIVES     | %3d | %3d | %3d | %3d |  %3d  |  %2d\n",
+           fives[0], fives[1], fives[2], fives[3], sumFives, pointsFives);
+    printf("SIXES     | %3d | %3d | %3d | %3d |  %3d  |  %2d\n",
+           sixes[0], sixes[1], sixes[2], sixes[3], sumSixes, pointsSixes);
+    printf("STRAIGHT  | %3d | %3d | %3d | %3d |  %3d  |  %2d\n",
+           straights[0], straights[1], straights[2], straights[3], sumStraights, pointsStraights);
+    printf("FULLHOUSE | %3d | %3d | %3d | %3d |  %3d  |  %2d\n",
+           fullHouse[0], fullHouse[1], fullHouse[2], fullHouse[3], sumFull, pointsFull);
+    printf("CHOICE    | %3d | %3d | %3d | %3d |  %3d  |  %2d\n",
+           choice[0], choice[1], choice[2], choice[3], sumChoice, pointsChoice);
+    printf("BALUT     | %3d | %3d | %3d | %3d |  %3d  |  %2d\n",
+           baluts[0], baluts[1], baluts[2], baluts[3], sumBalut, 0);
+
+    printf("----------------------------------------------------\n");
+    printf("TOTAL SCORE                         %3d   |\n", totalScoreFinal);
+    printf("TOTAL POINTS                              |  %3d\n", totalPointsFinal);
+    printf("====================================================\n");
     return 0;
 }
 
