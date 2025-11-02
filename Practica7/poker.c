@@ -40,5 +40,52 @@ int main() {
                 jugadores[i].cartas[j] = mazo[contador++];
             }
         }
+        for (int j = 0; j < TAMANO_MANO; j++) {
+            dealer.cartas[j] = mazo[contador++];
+        }
+
+        printf("\nEl dealer tiene: ");
+        for (int j = 0; j < TAMANO_MANO; j++) {
+            mostrarCarta(dealer.cartas[j]);
+            printf("  ");
+        }
+        printf("\n");
+
+        int apuesta = 50;
+        for (int i = 0; i < numJugadores; i++) {
+            printf("\nJugador %d recibe: ", jugadores[i].id);
+            for (int j = 0; j < TAMANO_MANO; j++) {
+                mostrarCarta(jugadores[i].cartas[j]);
+                printf("  ");
+            }
+
+            jugadores[i].rondasJugadas++;
+
+            int valorJugador = 0, valorDealer = 0;
+
+            if (esStraightFlush(jugadores[i].cartas))
+                valorJugador = 6;
+            else if (esThreeOfAKind(jugadores[i].cartas))
+                valorJugador = 5;
+            else if (esStraight(jugadores[i].cartas))
+                valorJugador = 4;
+            else if (esFlush(jugadores[i].cartas))
+                valorJugador = 3;
+            else if (esOnePair(jugadores[i].cartas))
+                valorJugador = 2;
+            else valorJugador = 1;
+
+            if (esStraightFlush(dealer.cartas))
+                valorDealer = 6;
+            else if (esThreeOfAKind(dealer.cartas))
+                valorDealer = 5;
+            else if (esStraight(dealer.cartas))
+                valorDealer = 4;
+            else if (esFlush(dealer.cartas))
+                valorDealer = 3;
+            else if (esOnePair(dealer.cartas))
+                valorDealer = 2;
+            else valorDealer = 1;
+        }
     }
 }
