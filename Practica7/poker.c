@@ -21,7 +21,7 @@ int main() {
     Jugador jugadores[MAX_JUGADORES];
     for (int i = 0; i < numJugadores; i++) {
         jugadores[i].id = i + 1;
-        jugadores[i].saldo = 300;
+        jugadores[i].saldo = 50;
         jugadores[i].rondasJugadas = 0;
     }
     Jugador dealer;
@@ -86,6 +86,38 @@ int main() {
             else if (esOnePair(dealer.cartas))
                 valorDealer = 2;
             else valorDealer = 1;
+
+            if (valorJugador > valorDealer) {
+                printf("\nugador %d gana contra el dealer.", jugadores[i].id);
+                jugadores[i].saldo += apuesta;
+            } else if (valorJugador < valorDealer) {
+                printf("\nJugador %d pierde contra el dealer.", jugadores[i].id);
+                jugadores[i].saldo -= apuesta;
+            } else {
+
+                Carta altaJ = esHighCard(jugadores[i].cartas);
+                Carta altaD = esHighCard(dealer.cartas);
+
+                if (altaJ.valor > altaD.valor) {
+                    printf("\nJugador %d gana por carta alta.", jugadores[i].id);
+                    jugadores[i].saldo += apuesta;
+                } else if (altaJ.valor < altaD.valor) {
+                    printf("\nJugador %d pierde por carta alta.", jugadores[i].id);
+                    jugadores[i].saldo -= apuesta;
+                } else {
+                    printf("\nJugador %d empata con el dealer.", jugadores[i].id);
+                }
+            }
+            printf("\nSaldo actual: $%d\n", jugadores[i].saldo);
+
+
+            if (jugadores[i].saldo <= 0) {
+                printf("Jugador %d ya no tiene dinero para apostar y se retira.\n", jugadores[i].id);
+                jugadores[i].saldo = 0;
+            }
         }
+
+        printf("\nQuieren jugar otra ronda? (s/n): ");
+        scanf(" %c", &continuar);
     }
 }
