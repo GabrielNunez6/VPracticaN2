@@ -109,7 +109,6 @@ int sumarComo11(Carta uno, Carta dos, Carta tres) {
 
 
 void llenarYMezclarBaraja(Carta carta[], int tamano) {
-    initAleatorio();
     char palos[4] = {'C', 'D', 'T', 'P'};
     int contador = 0;
     //Llenar la baraja inglesa

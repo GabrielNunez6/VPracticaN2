@@ -96,11 +96,31 @@ bool esOnePair(Carta mano[3]) {
  * @return La estructura Carta que tiene el valor más alto.
  */
 Carta esHighCard(Carta mano[3]) {
-    Carta mayor = mano[0]; // Suponemos que la primera carta es la mayor
+    Carta mayor = mano[0];
     for (int i = 1; i < 3; i++) {
         if (mano[i].valor > mayor.valor) {
             mayor = mano[i];
         }
     }
     return mayor;
+}
+/**
+ * Esta funcion Asigna un valor numérico a la mano según su categoría.
+ * Straight Flush > Three of a Kind > Straight > Flush > One Pair > High Card
+ *
+ * @param mano vector de 3 cartas que representa la mano.
+ * @return Valor numérico de la mano para comparaciones.
+ */
+int valorMano(Carta mano[3]) {
+    if (esStraightFlush(mano))
+        return 6;
+    if (esThreeOfAKind(mano))
+        return 5;
+    if (esStraight(mano))
+        return 4;
+    if (esFlush(mano))
+        return 3;
+    if (esOnePair(mano))
+        return 2;
+    return 1;
 }
