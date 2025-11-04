@@ -10,7 +10,6 @@ bool esFlush(Carta mano[3]);
 bool esStraightFlush(Carta mano[3]);
 bool esOnePair(Carta mano[3]);
 Carta esHighCard(Carta mano[3]);
-int valorMano(Carta mano[]);
 
 #endif
 
