@@ -33,8 +33,9 @@ void ejecutarMenu() {
             case 2:
                 sustituirPalabraInvertida(texto);
                 break;
-
-
+            case 3:
+                resaltarPalabraConSimbolo(texto);
+                break;
             case 0:
                 printf("Saliendo del programa...\n");
                 break;

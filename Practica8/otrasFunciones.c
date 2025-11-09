@@ -46,7 +46,7 @@ void sustituirPalabraInvertida(char texto[]) {
     int i = 0;
 
     while (texto[i] != '\0') {
-        
+
         if (strncasecmp(&texto[i], palabra, len) == 0 &&
             (i == 0 || !isalpha(texto[i - 1])) &&
             !isalpha(texto[i + len])) {
@@ -64,4 +64,53 @@ void sustituirPalabraInvertida(char texto[]) {
 
     strcpy(texto, resultado);
     printf("\nTexto modificado:\n%s\n", texto);
+}
+
+void resaltarPalabraConSimbolo(char texto[]) {
+    char palabra[100];
+    char simbolo;
+    printf("Palabra a resaltar: ");
+    scanf("%s", palabra);
+    printf("Símbolo: ");
+    scanf(" %c", &simbolo);
+
+    char resultado[2000] = "";
+    int longitudPalabra = strlen(palabra);
+    int i = 0;
+
+    while (texto[i] != '\0') {
+        int coincide = 1;
+
+        // Verifica si las letras coinciden
+        for (int j = 0; j < longitudPalabra; j++) {
+            if (tolower(texto[i + j]) != tolower(palabra[j])) {
+                coincide = 0;
+                break;
+            }
+        }
+
+        // Si la palabra coincide y está separada por espacios o signos
+        if (coincide && (i == 0 || !isalpha(texto[i - 1])) &&
+            !isalpha(texto[i + longitudPalabra])) {
+
+            int len = strlen(resultado);
+            resultado[len] = simbolo;
+            resultado[len + 1] = '\0';
+
+            strcat(resultado, palabra);
+
+            len = strlen(resultado);
+            resultado[len] = simbolo;
+            resultado[len + 1] = '\0';
+
+            i = i + longitudPalabra; // avanzar después de la palabra
+            } else {
+                int len = strlen(resultado);
+                resultado[len] = texto[i];
+                resultado[len + 1] = '\0';
+                i++;
+            }
+    }
+
+    printf("\nTexto resaltado:\n%s\n", resultado);
 }
