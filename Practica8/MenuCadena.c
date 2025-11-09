@@ -27,28 +27,20 @@ void ejecutarMenu() {
 
         switch (opcion) {
             case 1: {
-                printf("Que palabra quieres buscar? ");
-                fgets(palabra, sizeof(palabra), stdin);
-                limpiarSaltoLinea(palabra);
-
-                char textoCopia[1000];
-                strcpy(textoCopia, texto);
-
-                convertirMinusculas(palabra);
-                convertirMinusculas(textoCopia);
-
-                int n = buscarUbicaciones(palabra, textoCopia, posiciones);
-
-                printf("\n'%s' aparece %d veces y tiene %d letras.\n", palabra, n, strlen(palabra));
+                buscarPalabraEnTexto(texto);
                 break;
             }
+            case 2:
+                sustituirPalabraInvertida(texto);
+                break;
+
 
             case 0:
                 printf("Saliendo del programa...\n");
                 break;
 
             default:
-                printf("Opcion invalida. Intenta de nuevo.\n");
+                printf("Opcion invalida.\n");
         }
 
     } while (opcion != 0);
