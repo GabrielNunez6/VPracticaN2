@@ -31,6 +31,7 @@ void ejecutarMenu() {
     int posiciones[50];
     int opcion;
     char texto[3000];
+    char simbolo;
 
     strcpy(texto, textoOriginal);
 
@@ -43,19 +44,37 @@ void ejecutarMenu() {
         switch (opcion) {
             case 1:
                 strcpy(texto, textoOriginal);
-                buscarPalabraEnTexto(texto);
+                printf("Palabra a buscar: ");
+                scanf("%s", palabra);
+                buscarPalabraEnTexto(texto, palabra);
                 break;
             case 2:
                 strcpy(texto, textoOriginal);
-                sustituirPalabraInvertida(texto);
+                printf("Palabra a sustituir: ");
+                scanf("%s", palabra);
+                convertirMinusculas(palabra);
+                sustituirPorInversa(texto, palabra);
+                printf("\nTexto modificado:\n%s\n", texto);
                 break;
             case 3:
                 strcpy(texto, textoOriginal);
-                resaltarPalabraConSimbolo(texto);
+                printf("Palabra a resaltar: ");
+                scanf("%s", palabra);
+                printf("Símbolo: ");
+                scanf(" %c", &simbolo);
+                resaltarPalabraConSimbolo(texto, palabra, simbolo);
+                printf("\nTexto resaltado:\n%s\n", texto);
                 break;
             case 4:
                 strcpy(texto, textoOriginal);
                 listarFrecuenciaPalabras(texto);
+                break;
+            case 5:
+                strcpy(texto, textoOriginal);
+                printf("Palabra a borrar: ");
+                fgets(palabra, sizeof(palabra), stdin);
+                palabra[strcspn(palabra, "\n")] = '\0';
+                borrarPalabra(texto, palabra);
                 break;
             case 0:
                 printf("Saliendo del programa...\n");
