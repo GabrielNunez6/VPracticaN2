@@ -14,7 +14,7 @@ void mostrarMenu() {
 }
 
 void ejecutarMenu() {
-    char textoOriginal[3000] =
+    char textoOriginal[5000] =
         "La historia de Linux se remonta a 1991, cuando un estudiante finlandés llamado Linus Torvalds comenzó a desarrollar un sistema operativo inspirado en UNIX en su tiempo libre. "
         "Torvalds liberó la primera versión de Linux al público en septiembre de 1991. Desde entonces, Linux se ha convertido en uno de los sistemas operativos más populares y utilizados en todo el mundo.\n\n"
         "Las distribuciones de Linux son diferentes versiones del sistema operativo, que pueden variar en su estructura, configuración y paquetes de software incluidos. "
@@ -30,7 +30,7 @@ void ejecutarMenu() {
     char palabra[100];
     int posiciones[50];
     int opcion;
-    char texto[3000];
+    char texto[5000];
     char simbolo;
 
     strcpy(texto, textoOriginal);
@@ -77,7 +77,7 @@ void ejecutarMenu() {
                 borrarPalabra(texto, palabra);
                 break;
             case 0:
-                printf("Saliendo del programa...\n");
+                printf("........\n");
                 break;
             default:
                 printf("Opcion invalida.\n");

@@ -3,13 +3,31 @@
 #include <stdio.h>
 #include "cadenas.h"
 
+
+/*
+ * Convierte todos los caracteres de una cadena a minúsculas.
+ * Recorre la cadena carácter por carácter y aplica la función tolower()
+ * para asegurar que no haya distinción entre mayúsculas y minúsculas
+ * en operaciones posteriores, como búsquedas de texto.
+ *
+ * @param cadena Arreglo de caracteres (string) que será modificado directamente.
+ *               Debe estar terminado en '\0'.
+ */
 void convertirMinusculas(char cadena[]) {
     for (int i = 0; cadena[i] != '\0'; i++) {
         cadena[i] = tolower(cadena[i]);
     }
 }
 
-
+/*
+* Busca una palabra dentro de un texto y muestra cuántas veces aparece.
+* Convierte tanto el texto como la palabra a minúsculas antes de buscar
+* para que la comparación no distinga entre mayúsculas y minúsculas.
+* También muestra el número de letras de la palabra encontrada.
+*
+* @param texto  Cadena de caracteres donde se realizará la búsqueda.
+* @param palabra Cadena de caracteres que se desea buscar dentro del texto.
+*/
 void buscarPalabraEnTexto(char texto[], char palabra[]) {
     int posiciones[200];
     char textoCopia[5000];
@@ -25,6 +43,16 @@ void buscarPalabraEnTexto(char texto[], char palabra[]) {
            palabra, n, (int)strlen(palabra));
 }
 
+ /* Sustituye todas las apariciones de una palabra en un texto por su versión invertida en mayúsculas.
+ *
+ * La función busca palabra por palabra dentro del texto, comparando sin distinguir entre mayúsculas
+ * y minúsculas. Cuando encuentra coincidencias exactas con la palabra indicada, la reemplaza por su
+ * forma invertida y en mayúsculas. Las demás palabras permanecen iguales.
+ *
+ * @param texto   Cadena de caracteres que contiene el texto original y donde se realizarán los cambios.
+ *                El resultado final se guarda en la misma variable.
+ * @param palabra Cadena de caracteres que se desea buscar e invertir en el texto.
+ */
 void sustituirPorInversa(char texto[], char palabra[]) {
     char inversa[50];
     char resultado[3000];
@@ -62,7 +90,17 @@ void sustituirPorInversa(char texto[], char palabra[]) {
     strcpy(texto, resultado);
 }
 
-
+/* Resalta todas las apariciones de una palabra dentro de un texto
+ * rodeándolas con un símbolo específico.
+ * La comparación entre la palabra y el texto no distingue entre mayúsculas y minúsculas.
+ * Solo se consideran coincidencias completas (no dentro de otras palabras).
+ * Cada ocurrencia encontrada se rodea con el símbolo indicado al principio y al final.
+ *
+ * @param texto   Cadena de caracteres donde se buscará y modificará el contenido.
+ *                El texto resultante se almacena en el mismo arreglo.
+ * @param palabra Cadena de caracteres que se desea resaltar dentro del texto.
+ * @param simbolo Carácter que se colocará antes y después de cada coincidencia encontrada.
+ */
 void resaltarPalabraConSimbolo(char texto[], char palabra[], char simbolo) {
     char resultado[5000] = "";
     int i = 0;
@@ -138,6 +176,17 @@ void quitarTildes(char texto[]) {
     }
 }
 
+/*Analiza un texto y muestra la frecuencia de aparición de cada palabra,
+ * ordenándolas de mayor a menor frecuencia.
+ *
+ * Primero elimina los acentos del texto mediante la función quitarTildes().
+ * Luego convierte todas las letras a minúsculas para evitar duplicados por diferencias de mayúsculas.
+ * Cada palabra se almacena y su número de repeticiones se contabiliza.
+ * Finalmente, los resultados se ordenan y se imprimen en formato legible.
+ *
+ * @param texto Cadena de caracteres que contiene el texto a analizar.
+ *              El texto será modificado internamente (se eliminan tildes y se normaliza).
+ */
 void listarFrecuenciaPalabras(char texto[]) {
     quitarTildes(texto); // quitar acentos antes
 
@@ -212,6 +261,16 @@ void listarFrecuenciaPalabras(char texto[]) {
     }
 }
 
+/*Elimina todas las apariciones de una palabra específica dentro de un texto.
+ *
+ * La comparación entre palabras no distingue entre mayúsculas y minúsculas.
+ * Cada vez que la palabra buscada aparece, se omite al reconstruir el texto,
+ * dejando espacios entre las demás palabras. Al final, se muestra el texto modificado.
+ *
+ * @param texto   Cadena de caracteres donde se eliminarán las apariciones de la palabra.
+ *                El resultado final se almacena en el mismo arreglo.
+ * @param palabra Cadena de caracteres que se desea eliminar del texto.
+ */
 void borrarPalabra(char texto[], char palabra[]) {
     char palabraTemp[50];
     char resultado[3000] = "";
