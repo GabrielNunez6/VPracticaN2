@@ -10,14 +10,10 @@ void convertirMinusculas(char cadena[]) {
 }
 
 
-void buscarPalabraEnTexto(char texto[]) {
-    char palabra[100];
+void buscarPalabraEnTexto(char texto[], char palabra[]) {
     int posiciones[200];
-
-    printf("Palabra a buscar: ");
-    scanf("%99s", palabra);  // previene overflow
-
     char textoCopia[5000];
+
     strcpy(textoCopia, texto);
 
     convertirMinusculas(palabra);
@@ -25,70 +21,68 @@ void buscarPalabraEnTexto(char texto[]) {
 
     int n = buscarUbicaciones(palabra, textoCopia, posiciones);
 
-    printf("\n'%s' aparece %d veces y tiene %d letras.\n",
+    printf("\nLa palabra '%s' aparece %d veces y tiene %d letras.\n",
            palabra, n, (int)strlen(palabra));
 }
 
-void sustituirPalabraInvertida(char texto[]) {
-    char palabra[100];
-    char invertida[100];
-    printf("Palabra a sustituir: ");
-    scanf("%99s", palabra);
+void sustituirPorInversa(char texto[], char palabra[]) {
+    char inversa[50];
+    char resultado[3000];
+    char temp[50];
+    int i = 0, j = 0, k = 0;
 
-    int len = strlen(palabra);
-    for (int i = 0; i < len; i++) {
-        invertida[i] = toupper(palabra[len - 1 - i]);
+    invertirCadena(palabra, inversa);
+    for (int x = 0; inversa[x] != '\0'; x++) {
+        inversa[x] = toupper(inversa[x]);
     }
-    invertida[len] = '\0';
-
-    char resultado[5000] = "";
-    int i = 0;
-
     while (texto[i] != '\0') {
-        if (strncasecmp(&texto[i], palabra, len) == 0 &&
-            (i == 0 || !isalpha(texto[i - 1])) &&
-            !isalpha(texto[i + len])) {
+        if (isalpha(texto[i])) {
+            j = 0;
+            while (isalpha(texto[i])) {
+                temp[j++] = tolower(texto[i]);
+                i++;
+            }
+            temp[j] = '\0';
 
-            strcat(resultado, invertida);
-            i += len;
+            if (strcmp(temp, palabra) == 0) {
+                for (int x = 0; inversa[x] != '\0'; x++)
+                    resultado[k++] = inversa[x];
+            } else {
+                for (int x = 0; temp[x] != '\0'; x++)
+                    resultado[k++] = temp[x];
+            }
+            resultado[k++] = ' ';
         } else {
-            int largo = strlen(resultado);
-            resultado[largo] = texto[i];
-            resultado[largo + 1] = '\0';
+            resultado[k++] = texto[i];
             i++;
         }
     }
 
+    resultado[k] = '\0'; // Final de cadena
     strcpy(texto, resultado);
-    printf("\nTexto modificado:\n%s\n", texto);
 }
 
-void resaltarPalabraConSimbolo(char texto[]) {
-    char palabra[100];
-    char simbolo;
-    printf("Palabra a resaltar: ");
-    scanf("%99s", palabra);
-    printf("Símbolo: ");
-    scanf(" %c", &simbolo);
 
+void resaltarPalabraConSimbolo(char texto[], char palabra[], char simbolo) {
     char resultado[5000] = "";
-    int longitudPalabra = strlen(palabra);
     int i = 0;
+    int largo = strlen(palabra);
 
     while (texto[i] != '\0') {
-        int coincide = 1;
+        int igual = 1;
 
-        for (int j = 0; j < longitudPalabra; j++) {
+        for (int j = 0; j < largo; j++) {
             if (tolower(texto[i + j]) != tolower(palabra[j])) {
-                coincide = 0;
+                igual = 0;
                 break;
             }
         }
-
-        if (coincide &&
+        // Si coincide y no es parte de otra palabra
+        if (igual &&
             (i == 0 || !isalpha(texto[i - 1])) &&
-            !isalpha(texto[i + longitudPalabra])) {
+            !isalpha(texto[i + largo])) {
 
+            // Agrega el símbolo, la palabra y el símbolo al resultado
             int len = strlen(resultado);
             resultado[len] = simbolo;
             resultado[len + 1] = '\0';
@@ -99,41 +93,42 @@ void resaltarPalabraConSimbolo(char texto[]) {
             resultado[len] = simbolo;
             resultado[len + 1] = '\0';
 
-            i += longitudPalabra;
-        } else {
-            int len = strlen(resultado);
-            resultado[len] = texto[i];
-            resultado[len + 1] = '\0';
-            i++;
-        }
+            i += largo;
+            } else {
+
+                int len = strlen(resultado);
+                resultado[len] = texto[i];
+                resultado[len + 1] = '\0';
+                i++;
+            }
     }
 
-    printf("\nTexto resaltado:\n%s\n", resultado);
+    strcpy(texto, resultado);
 }
+
 void quitarTildes(char texto[]) {
     for (int i = 0; texto[i] != '\0'; i++) {
-        if ((unsigned char)texto[i] == 195) {
-            switch ((unsigned char)texto[i + 1]) {
-                case 161:
+        if (texto[i] == (char)195) {
+            switch (texto[i + 1]) {
+                case (char)161:
                     texto[i] = 'a';
                     break; // á
-                case 169:
+                case (char)169:
                     texto[i] = 'e';
                     break; // é
-                case 173:
+                case (char)173:
                     texto[i] = 'i';
                     break; // í
-                case 179:
+                case (char)179:
                     texto[i] = 'o';
                     break; // ó
-                case 186:
+                case (char)186:
                     texto[i] = 'u';
                     break; // ú
-                case 177:
+                case (char)177:
                     texto[i] = 'n';
                     break; // ñ
-                default:
-                    continue;
+                default: continue;
             }
 
             for (int j = i + 1; texto[j] != '\0'; j++) {
@@ -142,8 +137,9 @@ void quitarTildes(char texto[]) {
         }
     }
 }
+
 void listarFrecuenciaPalabras(char texto[]) {
-    quitarTildes(texto);
+    quitarTildes(texto); // quitar acentos antes
 
     char palabras[500][50];
     int frecuencia[500] = {0};
@@ -153,21 +149,21 @@ void listarFrecuenciaPalabras(char texto[]) {
 
     while (texto[i] != '\0') {
         if (isalpha(texto[i])) {
-            if (j < 49) palabra[j++] = tolower(texto[i]);
+            palabra[j++] = tolower(texto[i]);
         } else if (j > 0) {
             palabra[j] = '\0';
             j = 0;
 
-            int encontrada = 0;
+            int existe = 0;
             for (int k = 0; k < total; k++) {
                 if (strcmp(palabras[k], palabra) == 0) {
                     frecuencia[k]++;
-                    encontrada = 1;
+                    existe = 1;
                     break;
                 }
             }
 
-            if (!encontrada && total < 500) {
+            if (!existe) {
                 strcpy(palabras[total], palabra);
                 frecuencia[total] = 1;
                 total++;
@@ -176,42 +172,76 @@ void listarFrecuenciaPalabras(char texto[]) {
         i++;
     }
 
+    // Si el texto termina con una palabra sin espacio
     if (j > 0) {
         palabra[j] = '\0';
-        int encontrada = 0;
+        int existe = 0;
         for (int k = 0; k < total; k++) {
             if (strcmp(palabras[k], palabra) == 0) {
                 frecuencia[k]++;
-                encontrada = 1;
+                existe = 1;
                 break;
             }
         }
-        if (!encontrada && total < 500) {
+        if (!existe) {
             strcpy(palabras[total], palabra);
             frecuencia[total] = 1;
             total++;
         }
     }
+
+    // Ordenar de mayor a menor frecuencia (método burbuja)
     for (int a = 0; a < total - 1; a++) {
         for (int b = a + 1; b < total; b++) {
             if (frecuencia[b] > frecuencia[a]) {
-                int tempF = frecuencia[a];
+                int temp = frecuencia[a];
                 frecuencia[a] = frecuencia[b];
-                frecuencia[b] = tempF;
+                frecuencia[b] = temp;
 
-                char tempP[50];
-                strcpy(tempP, palabras[a]);
+                char tempPal[50];
+                strcpy(tempPal, palabras[a]);
                 strcpy(palabras[a], palabras[b]);
-                strcpy(palabras[b], tempP);
+                strcpy(palabras[b], tempPal);
             }
         }
     }
 
-    printf("=== LISTA DE FRECUENCIA DE PALABRAS ===\n");
-    printf("%-20s | %s\n", "PALABRA", "FRECUENCIA");
-    printf("---------------------+-----------\n");
-
-    for (int i = 0; i < total; i++) {
-        printf("%-20s | %d\n", palabras[i], frecuencia[i]);
+    printf("=== FRECUENCIA DE PALABRAS ===\n");
+    for (int k = 0; k < total; k++) {
+        printf("%-15s -> %d\n", palabras[k], frecuencia[k]);
     }
+}
+
+void borrarPalabra(char texto[], char palabra[]) {
+    char palabraTemp[50];
+    char resultado[3000] = "";
+    int i = 0, j = 0;
+
+    for (int k = 0; palabra[k] != '\0'; k++) {
+        palabra[k] = tolower(palabra[k]);
+    }
+
+    while (texto[i] != '\0') {
+        if (isalpha(texto[i])) {
+            j = 0;
+            while (isalpha(texto[i]) && j < 49) {
+                palabraTemp[j++] = tolower(texto[i]);
+                i++;
+            }
+            palabraTemp[j] = '\0';
+
+            // Si no es la palabra que queremos borrar, la copiamos
+            if (strcmp(palabraTemp, palabra) != 0) {
+                strcat(resultado, palabraTemp);
+                strcat(resultado, " ");
+            }
+        } else {
+            i++;
+        }
+    }
+
+    strcpy(texto, resultado);
+
+    printf("\nTexto modificado (se eliminó '%s'):\n", palabra);
+    printf("%s\n", texto);
 }
