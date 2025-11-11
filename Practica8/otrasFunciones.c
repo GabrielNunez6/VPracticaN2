@@ -15,9 +15,11 @@
  */
 void convertirMinusculas(char cadena[]) {
     for (int i = 0; cadena[i] != '\0'; i++) {
-        cadena[i] = tolower(cadena[i]);
+        cadena[i] = tolower(cadena[i]);//
     }
 }
+
+//------------------------------------------------------------------------------//
 
 /*
 * Busca una palabra dentro de un texto y muestra cuántas veces aparece.
@@ -43,6 +45,8 @@ void buscarPalabraEnTexto(char texto[], char palabra[]) {
            palabra, n, (int)strlen(palabra));
 }
 
+//------------------------------------------------------------------------------//
+
  /* Sustituye todas las apariciones de una palabra en un texto por su versión invertida en mayúsculas.
  *
  * La función busca palabra por palabra dentro del texto, comparando sin distinguir entre mayúsculas
@@ -59,10 +63,12 @@ void sustituirPorInversa(char texto[], char palabra[]) {
     char temp[50];
     int i = 0, j = 0, k = 0;
 
-    invertirCadena(palabra, inversa);
+    invertirCadena(palabra, inversa);//USAMOS LA FUNCION INVERTIR CADENA
     for (int x = 0; inversa[x] != '\0'; x++) {
-        inversa[x] = toupper(inversa[x]);
+        inversa[x] = toupper(inversa[x]); //CON TOUPPER LA CADENA INVERTIDA SE CONVIERTE A MAYUSCULAS
     }
+//cuando encuentra una secuencia de letras, la guarda en temp
+//y la convierte a minúsculas para poder compararla con la palabra original.
     while (texto[i] != '\0') {
         if (isalpha(texto[i])) {
             j = 0;
@@ -89,6 +95,8 @@ void sustituirPorInversa(char texto[], char palabra[]) {
     strcpy(texto, resultado);
 }
 
+//------------------------------------------------------------------------------//
+
 /* Resalta todas las apariciones de una palabra dentro de un texto
  * rodeándolas con un símbolo específico.
  * La comparación entre la palabra y el texto no distingue entre mayúsculas y minúsculas.
@@ -105,6 +113,7 @@ void resaltarPalabraConSimbolo(char texto[], char palabra[], char simbolo) {
     int i = 0;
     int largo = strlen(palabra);
 
+    //En cada posición compara si los siguientes caracteres coinciden con la palabra buscada
     while (texto[i] != '\0') {
         int igual = 1;
 
@@ -114,12 +123,12 @@ void resaltarPalabraConSimbolo(char texto[], char palabra[], char simbolo) {
                 break;
             }
         }
-        // Si coincide y no es parte de otra palabra
+        // Si hay coincidencia y la palabra no forma parte de otra (es decir, está separada por espacios o signos),
+        // se agregan al resultado el símbolo, la palabra y nuevamente el símbolo.
         if (igual &&
             (i == 0 || !isalpha(texto[i - 1])) &&
             !isalpha(texto[i + largo])) {
 
-            // Agrega el símbolo, la palabra y el símbolo al resultado
             int len = strlen(resultado);
             resultado[len] = simbolo;
             resultado[len + 1] = '\0';
@@ -131,6 +140,7 @@ void resaltarPalabraConSimbolo(char texto[], char palabra[], char simbolo) {
             resultado[len + 1] = '\0';
 
             i += largo;
+            //Si no hay coincidencia, copia el caracter actual del texto al resultado
             } else {
 
                 int len = strlen(resultado);
@@ -139,11 +149,14 @@ void resaltarPalabraConSimbolo(char texto[], char palabra[], char simbolo) {
                 i++;
             }
     }
-
     strcpy(texto, resultado);
 }
+//------------------------------------------------------------------------------//
 
-void quitarTildes(char texto[]) {
+void quitarAcentos(char texto[]) {
+    //con un ciclo for. Cuando encuentra el valor (char)195,
+    //significa que el carácter siguiente pertenece a
+    //una letra acentuada en formato UTF-8. (Es el formato que usa C)
     for (int i = 0; texto[i] != '\0'; i++) {
         if (texto[i] == (char)195) {
             switch (texto[i + 1]) {
@@ -165,7 +178,8 @@ void quitarTildes(char texto[]) {
                 case (char)177:
                     texto[i] = 'n';
                     break; // ñ
-                default: continue;
+                default:
+                    continue;
             }
 
             for (int j = i + 1; texto[j] != '\0'; j++) {
@@ -175,26 +189,29 @@ void quitarTildes(char texto[]) {
     }
 }
 
+//------------------------------------------------------------------------------//
+
 /*Analiza un texto y muestra la frecuencia de aparición de cada palabra,
  * ordenándolas de mayor a menor frecuencia.
  *
- * Primero elimina los acentos del texto mediante la función quitarTildes().
+ * Primero elimina los acentos del texto mediante la función quitarAcentos().
  * Luego convierte todas las letras a minúsculas para evitar duplicados por diferencias de mayúsculas.
  * Cada palabra se almacena y su número de repeticiones se contabiliza.
  * Finalmente, los resultados se ordenan y se imprimen en formato legible.
  *
  * @param texto Cadena de caracteres que contiene el texto a analizar.
- *              El texto será modificado internamente (se eliminan tildes y se normaliza).
+ *              El texto será modificado internamente (se eliminan acentos).
  */
 void listarFrecuenciaPalabras(char texto[]) {
-    quitarTildes(texto); // quitar acentos antes
-
+    quitarAcentos(texto);
     char palabras[500][50];
     int frecuencia[500] = {0};
     int total = 0;
     char palabra[50];
     int i = 0, j = 0;
+    char palabratemp[50];
 
+    //Recorre el texto caracter por caracter
     while (texto[i] != '\0') {
         if (isalpha(texto[i])) {
             palabra[j++] = tolower(texto[i]);
@@ -210,7 +227,6 @@ void listarFrecuenciaPalabras(char texto[]) {
                     break;
                 }
             }
-
             if (!existe) {
                 strcpy(palabras[total], palabra);
                 frecuencia[total] = 1;
@@ -219,7 +235,6 @@ void listarFrecuenciaPalabras(char texto[]) {
         }
         i++;
     }
-
     // Si el texto termina con una palabra sin espacio
     if (j > 0) {
         palabra[j] = '\0';
@@ -237,8 +252,7 @@ void listarFrecuenciaPalabras(char texto[]) {
             total++;
         }
     }
-
-    // Ordenar de mayor a menor frecuencia (método burbuja)
+    // Ordenar de mayor a menor frecuencia  (usando metodo burbuja)
     for (int a = 0; a < total - 1; a++) {
         for (int b = a + 1; b < total; b++) {
             if (frecuencia[b] > frecuencia[a]) {
@@ -246,19 +260,22 @@ void listarFrecuenciaPalabras(char texto[]) {
                 frecuencia[a] = frecuencia[b];
                 frecuencia[b] = temp;
 
-                char tempPal[50];
-                strcpy(tempPal, palabras[a]);
+                strcpy(palabratemp, palabras[a]);
                 strcpy(palabras[a], palabras[b]);
-                strcpy(palabras[b], tempPal);
+                strcpy(palabras[b], palabratemp);
             }
         }
     }
-
+    //Con un ciclo imprimimos una lista de las palabras que mas se utilizaron
+    //en el texto, se usa el %=-15s ya que es la longitud a la que va a estar
+    //la palabra impresa para tener un listado mas a detalle y legible
     printf("=== FRECUENCIA DE PALABRAS ===\n");
     for (int k = 0; k < total; k++) {
         printf("%-15s -> %d\n", palabras[k], frecuencia[k]);
     }
 }
+
+//------------------------------------------------------------------------------//
 
 /*Elimina todas las apariciones de una palabra específica dentro de un texto.
  *
