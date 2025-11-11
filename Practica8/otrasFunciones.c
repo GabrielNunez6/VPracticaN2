@@ -71,7 +71,6 @@ void sustituirPorInversa(char texto[], char palabra[]) {
                 i++;
             }
             temp[j] = '\0';
-
             if (strcmp(temp, palabra) == 0) {
                 for (int x = 0; inversa[x] != '\0'; x++)
                     resultado[k++] = inversa[x];

@@ -27,6 +27,7 @@ void ejecutarMenu() {
         "Linux es un sistema operativo de código abierto que ha sido desarrollado y mejorado por una comunidad global de programadores y usuarios durante décadas. "
         "Existen muchas distribuciones de Linux, cada una con sus propias características y objetivos, y la estructura y el sistema de archivos de Linux se basan en un enfoque de archivo único y una estructura jerárquica.";
 
+
     char palabra[100];
     int posiciones[50];
     int opcion;
@@ -44,12 +45,14 @@ void ejecutarMenu() {
         switch (opcion) {
             case 1:
                 strcpy(texto, textoOriginal);
+                quitarTildes(texto);
                 printf("Palabra a buscar: ");
                 scanf("%s", palabra);
                 buscarPalabraEnTexto(texto, palabra);
                 break;
             case 2:
                 strcpy(texto, textoOriginal);
+                quitarTildes(texto);
                 printf("Palabra a sustituir: ");
                 scanf("%s", palabra);
                 convertirMinusculas(palabra);
@@ -58,19 +61,22 @@ void ejecutarMenu() {
                 break;
             case 3:
                 strcpy(texto, textoOriginal);
+                quitarTildes(texto);
                 printf("Palabra a resaltar: ");
                 scanf("%s", palabra);
-                printf("Símbolo: ");
+                printf("Simbolo: ");
                 scanf(" %c", &simbolo);
                 resaltarPalabraConSimbolo(texto, palabra, simbolo);
                 printf("\nTexto resaltado:\n%s\n", texto);
                 break;
             case 4:
                 strcpy(texto, textoOriginal);
+                quitarTildes(texto);
                 listarFrecuenciaPalabras(texto);
                 break;
             case 5:
                 strcpy(texto, textoOriginal);
+                quitarTildes(texto);
                 printf("Palabra a borrar: ");
                 fgets(palabra, sizeof(palabra), stdin);
                 palabra[strcspn(palabra, "\n")] = '\0';
