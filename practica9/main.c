@@ -8,7 +8,8 @@ int main() {
     int contador = 1;
 
     printf("Ingresa el nombre del archivo: ");
-    scanf("%s", nombre);
+    fgets(nombre, 100, stdin);
+    nombre[strcspn(nombre, "\n")] = '\0';
 
     // Cambiar extensión a .num
     // Buscar el punto de la extensión
@@ -20,7 +21,6 @@ int main() {
         }
     }
 
-    // Copiar el nombre y reemplazar o agregar extensión
     if (pos != -1) {
         // Copia todo antes del punto
         strncpy(nombreNum, nombre, pos);
@@ -47,7 +47,6 @@ int main() {
         return 1;
     }
 
-    // Leer línea por línea
     while (fgets(linea, sizeof(linea), original) != NULL) {
         fprintf(nuevo, "%d: %s", contador, linea);
         contador++;

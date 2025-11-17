@@ -114,3 +114,30 @@ void mostrar_unicas(char nombreArchivo[]) {
  * @param nombreArchivo Nombre del archivo donde se realizará la búsqueda.
  * @param buscada       Palabra que se desea buscar en el archivo.
  */
+void buscar_palabra(char nombreArchivo[], char buscada[]) {
+    FILE *archivo = fopen(nombreArchivo, "r");
+    if (archivo == NULL) {
+        printf("No se pudo abrir el archivo '%s'\n", nombreArchivo);
+        return;
+    }
+
+    char linea[200];
+    int num_linea = 0;
+    int encontrada = 0;
+
+    while (fgets(linea, 200, archivo) != NULL) {
+        num_linea++;
+        int posiciones[200];
+        int n = buscarUbicaciones(buscada, linea, posiciones); // usamos tu función
+        if (n > 0) {
+            printf("'%s' encontrada en linea %d\n", buscada, num_linea);
+            encontrada = 1;
+        }
+    }
+
+    if (!encontrada) {
+        printf("'%s' no encontrada en el archivo.\n", buscada);
+    }
+
+    fclose(archivo);
+}
