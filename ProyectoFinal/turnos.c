@@ -13,7 +13,8 @@
 int puedeFormarPar(Jugador jugador) {
     for(int i=0;i<jugador.numFichas;i++){
         for(int j=i+1;j<jugador.numFichas;j++){
-            if(suma20(jugador.mano[i], jugador.mano[j])) return 1;
+            if(suma20(jugador.mano[i], jugador.mano[j]))
+                return 1;
         }
     }
     return 0;
@@ -24,7 +25,8 @@ int jugarTurnos(Jugador jugadores[], int numJugadores, Domino mazo[], int totalF
 
     while(!juegoTerminado) {
         for(int p = 0; p < numJugadores; p++) {
-            if(jugadores[p].numFichas == 0) continue; // jugador sin fichas ya ganó o se retiró
+            if(jugadores[p].numFichas == 0)
+                continue; // jugador sin fichas ya ganó o se retiró
 
             printf("\n--- Turno del jugador: %s ---\n", jugadores[p].nombre);
             // Mostrar la mano del jugador
@@ -37,9 +39,9 @@ int jugarTurnos(Jugador jugadores[], int numJugadores, Domino mazo[], int totalF
             // Intentar descartar un par automáticamente
             int parFormado = descartarParejas(jugadores, p, nombreArchivo);
             if(parFormado) {
-                printf("Se descartó un par automáticamente.\n");
+                printf("Se descarto un par automaticamente.\n");
                 if(jugadores[p].numFichas == 0) {
-                    printf("¡El jugador %s se queda sin fichas y gana la partida!\n", jugadores[p].nombre);
+                    printf("El jugador %s se queda sin fichas y gana la partida!\n", jugadores[p].nombre);
                     registrarGanador(jugadores[p], "historialGanadores.bin");
                     juegoTerminado = 1;
                     break;
@@ -86,7 +88,6 @@ int jugarTurnos(Jugador jugadores[], int numJugadores, Domino mazo[], int totalF
             juegoTerminado = 1;
         }
     }
-
     return bancoIndice;
 }
 

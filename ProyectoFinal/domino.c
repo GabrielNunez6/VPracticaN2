@@ -33,7 +33,7 @@ void mezclarMazo(Domino mazo[], int totalFichas) {
 }
 
 /*
- * Imprimir todas las fichas del mazo (para depuración)
+ * Imprimir todas las fichas del mazo
  */
 void imprimirMazo(Domino mazo[], int totalFichas) {
     for(int i = 0; i < totalFichas; i++) {
