@@ -3,18 +3,33 @@
 #include <time.h>
 #include "registroPartida.h"
 
-// Guardar un par en el archivo binario
+#include "ganador.h"
+
+/*
+ * Función: guardarPar
+ * -------------------
+ * Guarda un par formado por un jugador en un archivo binario de registro de la partida.
+ *
+ * r: estructura RegistroPar que contiene el nombre del jugador y los valores de las fichas
+ * nombreArchivo: nombre del archivo binario donde se guardará el par
+ */
 void guardarPar(RegistroPar r, char nombreArchivo[]){
-    FILE *archivo = fopen(nombreArchivo, "ab");
+    FILE *archivo = fopen(nombreArchivo, "ab"); // Abrir archivo en modo agregar binario
     if(archivo != NULL){
-        fwrite(&r, sizeof(RegistroPar), 1, archivo);
+        fwrite(&r, sizeof(RegistroPar), 1, archivo); // Guardar el registro
         fclose(archivo);
     } else {
         printf("Error al guardar el par en el archivo.\n");
     }
 }
 
-// Mostrar todos los pares guardados de la partida
+/*
+ * Función: mostrarPartida
+ * -----------------------
+ * Muestra en consola todos los pares guardados de una partida a partir de su archivo binario.
+ *
+ * nombreArchivo: nombre del archivo binario que contiene los pares de la partida
+ */
 void mostrarPartida(char nombreArchivo[]){
     FILE *archivo = fopen(nombreArchivo, "rb");
     if(archivo != NULL){
@@ -30,17 +45,26 @@ void mostrarPartida(char nombreArchivo[]){
     }
 }
 
-// Genera un nombre de archivo basado en la fecha actual
+/* (SACADA DE CHATGPT)
+ * Función: generarNombreArchivo
+ * -----------------------------
+ * Genera un nombre único para el archivo de registro de la partida basado en la fecha actual.
+ * Si ya existe un archivo con ese nombre, se añade un sufijo incremental (-1, -2, etc.).
+ *
+ * nombreArchivo: arreglo donde se almacenará el nombre generado
+ */
 void generarNombreArchivo(char nombreArchivo[]){
     time_t t = time(NULL);
-    struct tm *tm_info = localtime(&t); // permitido usar puntero solo para fecha
+    struct tm *tm_info = localtime(&t); // Usar puntero permitido para manipular fecha
 
+    // Formato inicial: partidaDDMMYYYY.bin
     strftime(nombreArchivo, 100, "partida%d%m%Y.bin", tm_info);
 
     FILE *archivo = fopen(nombreArchivo, "rb");
     int contador = 1;
     while (archivo != NULL){
         fclose(archivo);
+        // Añadir sufijo incremental si ya existe archivo
         sprintf(nombreArchivo, "partida%02d%02d%04d-%d.bin",
                 tm_info->tm_mday,
                 tm_info->tm_mon + 1,
@@ -51,7 +75,13 @@ void generarNombreArchivo(char nombreArchivo[]){
     }
 }
 
-// Reproducir una partida desde el archivo
+/*
+ * Función: reproducirPartida
+ * --------------------------
+ * Reproduce en consola la partida mostrando todos los pares formados por cada jugador.
+ * @param
+ * nombreArchivo: nombre del archivo binario que contiene los pares de la partida
+ */
 void reproducirPartida(char nombreArchivo[]){
     FILE *archivo = fopen(nombreArchivo,"rb");
     if(archivo != NULL){

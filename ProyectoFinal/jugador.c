@@ -6,6 +6,19 @@
 #include "registroPartida.h"
 #include <string.h>
 
+/*
+ * Función: repartirFichas
+ * -----------------------
+ * Reparte 6 fichas a cada jugador desde el mazo, comenzando en el índice bancoIndice.
+ * @param
+ * jugadores: arreglo de jugadores que recibirán fichas
+ * numJugadores: cantidad de jugadores en la partida
+ * mazo: arreglo que contiene todas las fichas del domino
+ * totalFichas: número total de fichas en el mazo
+ * bancoIndice: índice de la primera ficha disponible en el mazo
+ *
+ * Devuelve: void
+ */
 void repartirFichas(Jugador jugadores[], int numJugadores, Domino mazo[], int totalFichas, int bancoIndice) {
     int i;
     for(i = 0; i < numJugadores; i++){
@@ -17,6 +30,13 @@ void repartirFichas(Jugador jugadores[], int numJugadores, Domino mazo[], int to
     }
 }
 
+/*
+ * Función: mostrarMano
+ * --------------------
+ * Imprime en consola todas las fichas que tiene un jugador.
+ * @param
+ * jugador: estructura Jugador cuya mano se mostrará
+ */
 void mostrarMano(Jugador jugador) {
     printf("Fichas en mano: ");
     for(int i=0; i<jugador.numFichas; i++){
@@ -25,7 +45,14 @@ void mostrarMano(Jugador jugador) {
     printf("\n");
 }
 
-
+/*
+ * Función: mostrarManos
+ * ---------------------
+ * Muestra las manos de todos los jugadores en la partida.
+ * @paaram
+ * jugadores: arreglo de jugadores
+ * numJugadores: número de jugadores
+ */
 void mostrarManos(Jugador jugadores[], int numJugadores) {
     int i, j;
     for(i=0;i<numJugadores;i++){
@@ -37,6 +64,15 @@ void mostrarManos(Jugador jugadores[], int numJugadores) {
     }
 }
 
+/*
+ * Función: suma20
+ * ----------------
+ * Determina si dos fichas pueden formar un par que sume 20, considerando comodines (0).
+ * @param
+ * a, b: fichas a evaluar
+ *
+ * Devuelve: 1 si las fichas forman 20, 0 si no
+ */
 int suma20(Domino a, Domino b) {
     int posiblesA[2] = {a.lado1, a.lado2};
     int posiblesB[2] = {b.lado1, b.lado2};
@@ -58,9 +94,21 @@ int suma20(Domino a, Domino b) {
     return 0;
 }
 
+/*
+ * Función: descartarParejas
+ * -------------------------
+ * Recorre la mano de un jugador buscando pares que sumen 20.
+ * Guarda el par en un archivo de registro de la partida y remueve las fichas descartadas.
+ * @param
+ * jugadores: arreglo de jugadores
+ * indiceJugador: índice del jugador a evaluar
+ * nombreArchivo: archivo binario donde se guardan los pares formados
+ *
+ * Devuelve: 1 si se descartó al menos un par, 0 si no
+ */
 int descartarParejas(Jugador jugadores[], int indiceJugador, char nombreArchivo[]) {
     Jugador jugador = jugadores[indiceJugador];
-    int usado[12] = {0};
+    int usado[12] = {0}; // Marcador de fichas descartadas
     int descarto = 0;
 
     for(int i = 0; i < jugador.numFichas; i++) {
@@ -69,14 +117,17 @@ int descartarParejas(Jugador jugadores[], int indiceJugador, char nombreArchivo[
         for(int j = i + 1; j < jugador.numFichas; j++) {
             if(usado[j]) continue;
 
+            // Verificar si la combinación suma 20
             if(suma20(jugador.mano[i], jugador.mano[j])) {
                 printf("Jugador %s descarta pareja: [%d|%d] + [%d|%d]\n",
                        jugador.nombre,
                        jugador.mano[i].lado1, jugador.mano[i].lado2,
                        jugador.mano[j].lado1, jugador.mano[j].lado2);
 
+                // Guardar par en el registro de la partida
                 RegistroPar r;
-                snprintf(r.nombreJugador, sizeof(r.nombreJugador), "%s", jugador.nombre);
+                strncpy(r.nombreJugador, jugador.nombre, sizeof(r.nombreJugador) - 1);
+                r.nombreJugador[sizeof(r.nombreJugador) - 1] = '\0';
                 r.lado1 = jugador.mano[i].lado1;
                 r.lado2 = jugador.mano[i].lado2;
                 r.lado3 = jugador.mano[j].lado1;

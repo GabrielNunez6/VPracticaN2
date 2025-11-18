@@ -28,7 +28,7 @@ int main() {
                 break;
             }
             case 2:
-                mostrarHistorial();
+                mostrarHistorialTxt();
                 break;
             case 3: {
                 char archivo[100];

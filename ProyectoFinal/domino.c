@@ -5,8 +5,14 @@
 #include "domino.h"
 
 /*
- * Crear el mazo de dominó según el tipo elegido.
- * Devuelve el número total de fichas creadas.
+ * Función: crearMazo
+ * ------------------
+ * Crea un mazo de dominó doble según el tipo indicado (6, 9 o 12).
+ *
+ * mazo: arreglo donde se almacenarán las fichas generadas
+ * tipo_domino: número máximo de puntos por lado (6, 9 o 12)
+ *
+ * Retorna: el número total de fichas creadas en el mazo
  */
 int crearMazo(Domino mazo[], int tipo_domino) {
     int totalFichas = 0;
@@ -21,11 +27,16 @@ int crearMazo(Domino mazo[], int tipo_domino) {
 }
 
 /*
- * Mezclar un mazo de dominó de manera aleatoria usando numeroAleatorio()
+ * Función: mezclarMazo
+ * --------------------
+ * Mezcla aleatoriamente un mazo de dominó usando la función numeroAleatorio().
+ *
+ * mazo: arreglo con las fichas del mazo a mezclar
+ * totalFichas: cantidad total de fichas en el mazo
  */
 void mezclarMazo(Domino mazo[], int totalFichas) {
     for(int i = 0; i < totalFichas; i++) {
-        int r = numeroAleatorio(totalFichas); // Función de aleatorio.h
+        int r = numeroAleatorio(totalFichas); // obtiene un índice aleatorio
         Domino temp = mazo[i];
         mazo[i] = mazo[r];
         mazo[r] = temp;
@@ -33,7 +44,12 @@ void mezclarMazo(Domino mazo[], int totalFichas) {
 }
 
 /*
- * Imprimir todas las fichas del mazo
+ * Función: imprimirMazo
+ * ---------------------
+ * Muestra en consola todas las fichas del mazo.
+ *
+ * mazo: arreglo con las fichas a imprimir
+ * totalFichas: cantidad total de fichas en el mazo
  */
 void imprimirMazo(Domino mazo[], int totalFichas) {
     for(int i = 0; i < totalFichas; i++) {

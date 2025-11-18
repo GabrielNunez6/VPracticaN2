@@ -16,7 +16,7 @@ typedef struct {
 } RegistroGanador;
 
 void guardarGanador(RegistroGanador r);
-void mostrarHistorial();
+void mostrarHistorialTxt();
 void registrarGanador(Jugador ganador, char nombreArchivo[]);
 
 #endif //PROYECTOFINAL_GANADOR_H
