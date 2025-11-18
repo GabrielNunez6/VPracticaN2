@@ -1,61 +1,96 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "aleatorio.h"
 #include "domino.h"
 #include "jugador.h"
 #include "turnos.h"
+#include "registroPartida.h"
+#include "ganador.h"
 
 #define MAX_JUGADORES 4
 #define MAX_FICHAS 91
-#define ARCHIVO_BINARIO "partida_lucky20.dat"
 
-int main() {
+int main(){
     initAleatorio();
+    int opcionMenu=0;
 
-    int numJugadores, tipoDomino;
+    while(opcionMenu != 4){
+        printf("\n=== LUCKY 20 ===\n");
+        printf("1) Jugar nueva partida\n");
+        printf("2) Consultar historial de ganadores\n");
+        printf("3) Reproducir partida guardada\n");
+        printf("4) Salir\n");
+        printf("Seleccione opcion: ");
+        scanf("%d",&opcionMenu);
 
-    printf("Número de jugadores (1-4): ");
-    scanf("%d", &numJugadores);
-    if(numJugadores < 1 || numJugadores > MAX_JUGADORES) {
-        printf("Número de jugadores inválido.\n");
-        return 1;
-    }
+        if(opcionMenu == 1){
+            int numJugadores, tipoDomino, modoPrueba;
+            printf("Modo prueba? (0=no,1=si): ");
+            scanf("%d",&modoPrueba);
+            printf("Numero de jugadores (1-4): ");
+            scanf("%d",&numJugadores);
+            printf("Tipo de domino (6,9,12): ");
+            scanf("%d",&tipoDomino);
 
-    printf("Tipo de dominó (6, 9 o 12): ");
-    scanf("%d", &tipoDomino);
-    if(tipoDomino != 6 && tipoDomino != 9 && tipoDomino != 12) {
-        printf("Tipo de dominó inválido.\n");
-        return 1;
-    }
+            // Crear mazo
+            Domino mazo[MAX_FICHAS];
+            int totalFichas = crearMazo(mazo, tipoDomino);
+            mezclarMazo(mazo, totalFichas);
 
-    Domino mazo[MAX_FICHAS];
-    int totalFichas = crearMazo(mazo, tipoDomino);
-    mezclarMazo(mazo, totalFichas);
+            // Inicializar jugadores
+            Jugador jugadores[MAX_JUGADORES];
+            for(int i=0; i<numJugadores; i++){
+                jugadores[i].numFichas = 0;
+                sprintf(jugadores[i].nombre, "Jugador %d", i+1); // Nombres por defecto
+            }
 
-    Jugador jugadores[MAX_JUGADORES];
-    for(int i=0; i<numJugadores; i++)
-        jugadores[i].numFichas = 0;
+            int bancoIndice = 0;
+            char nombreArchivoPartida[100];
+            generarNombreArchivo(nombreArchivoPartida);
+            printf("Archivo de la partida: %s\n", nombreArchivoPartida);
 
-    int bancoIndice = 0;
+            // Reparto de fichas
+            if(modoPrueba){
+                // Jugador 0 recibe fichas que garantizan formar un par
+                jugadores[0].mano[0] = (Domino){10,10};
+                jugadores[0].mano[1] = (Domino){10,10};
+                jugadores[0].numFichas = 2;
 
-    // Reparto inicial de 6 fichas por jugador
-    repartirFichas(jugadores, numJugadores, mazo, totalFichas, bancoIndice);
+                // Reparto normal para los demás jugadores
+                for(int i=1; i<numJugadores; i++){
+                    while(jugadores[i].numFichas < 6 && bancoIndice < totalFichas){
+                        jugadores[i].mano[jugadores[i].numFichas] = mazo[bancoIndice];
+                        jugadores[i].numFichas++;
+                        bancoIndice++;
+                    }
+                }
+            } else {
+                // Reparto normal para todos
+                for(int i=0; i<numJugadores; i++){
+                    while(jugadores[i].numFichas < 6 && bancoIndice < totalFichas){
+                        jugadores[i].mano[jugadores[i].numFichas] = mazo[bancoIndice];
+                        jugadores[i].numFichas++;
+                        bancoIndice++;
+                    }
+                }
+            }
 
-    // Llamada al juego interactivo
-    bancoIndice = jugarTurnos(jugadores, numJugadores, mazo, totalFichas, bancoIndice);
+            // Inicia los turnos
+            bancoIndice = jugarTurnos(jugadores, numJugadores, mazo, totalFichas, bancoIndice, nombreArchivoPartida);
 
-    // Guardar partida en archivo binario
-    FILE *archivo = fopen(ARCHIVO_BINARIO, "wb");
-    if(archivo != NULL) {
-        fwrite(&numJugadores, sizeof(int), 1, archivo);
-        for(int i = 0; i < numJugadores; i++) {
-            fwrite(&jugadores[i].numFichas, sizeof(int), 1, archivo);
-            fwrite(jugadores[i].mano, sizeof(Domino), jugadores[i].numFichas, archivo);
+        } else if(opcionMenu == 2){
+            mostrarHistorial();
+        } else if(opcionMenu == 3){
+            char archivo[100];
+            printf("Ingrese nombre de archivo de la partida: ");
+            scanf("%s", archivo);
+            reproducirPartida(archivo);
+        } else if(opcionMenu == 4){
+            printf("Gracias por jugar Lucky 20!\n");
+        } else {
+            printf("Opción inválida, intente de nuevo.\n");
         }
-        fclose(archivo);
-        printf("Partida guardada en '%s'\n", ARCHIVO_BINARIO);
-    } else {
-        printf("Error al guardar la partida.\n");
     }
 
     return 0;
