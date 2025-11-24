@@ -18,11 +18,18 @@ int main(void) {
 
         switch (opcion) {
             case 1:
-                // Alta
+                // Dar de alta registro
                 cantidadRegistros =
                         altaRecord(registros, cantidadRegistros, MAX_REGISTROS);
                 break;
-                return 0;
+                case 2:
+                // Dar de Baja registro
+                printf("Ingrese el ID a eliminar: ");
+                scanf("%d", &idBuscado);
+
+                cantidadRegistros =
+                    bajaRecord(registros, cantidadRegistros, idBuscado);
+                break;
         }
     } while (opcion != 0);
 }
