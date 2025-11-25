@@ -2,111 +2,60 @@
 // Created by usuario on 11/24/2025.
 //
 #include <stdio.h>
+#include <stdlib.h>
+
 #include "registro.h"
 
 /**
- * Agrega un nuevo registro al vector.
+ * @brief Guarda todos los registros en un archivo binario.
  *
- * @param registros        Arreglo donde se almacenan los registros.
- * @param cantidadActual   Número actual de registros almacenados.
- * @param capacidadMaxima  Tamaño máximo del arreglo.
- *
- * @return Nueva cantidad de registros después del alta.
+ * @param registros      Arreglo de registros.
+ * @param cantidadActual Cantidad de registros.
  */
-int altaRecord(Record registros[], int cantidadActual, int capacidadMaxima) {
+void guardarRegistroBinario(Record registros[], int cantidadActual) {
+    FILE *archivo;
+    archivo = fopen("registros.bin", "wb");
 
-    // Verificar si aún hay espacio
-    if (cantidadActual >= capacidadMaxima) {
-        printf("No es posible agregar más registros.\n");
-        return cantidadActual;
+    if (archivo == NULL) {
+        printf("No se pudo abrir el archivo para guardar.\n");
+        exit(1);
     }
 
-    // Solicitar información del nuevo registro
-    printf("Ingrese el ID: ");
-    scanf("%d", &registros[cantidadActual].id);
+    /* Guardamos primero cuántos registros existen */
+    fwrite(&cantidadActual, sizeof(int), 1, archivo);
 
-    printf("Ingrese el nombre del jugador: ");
-    scanf(" %24[^\n]", registros[cantidadActual].nombre);
+    /* Ahora guardamos todos los registros */
+    fwrite(registros, sizeof(Record), cantidadActual, archivo);
 
-    printf("Ingrese los puntos obtenidos: ");
-    scanf("%d", &registros[cantidadActual].puntos);
+    fclose(archivo);
 
-    printf("Ingrese la fecha (dd mm aaaa): ");
-    scanf("%d %d %d",&registros[cantidadActual].dia, &registros[cantidadActual].mes, &registros[cantidadActual].anio);
-
-    // Aumentar la cantidad
-    return cantidadActual + 1;
+    printf("Registros guardados correctamente.\n");
 }
 
 /**
- * Elimina un registro del vector buscando por ID.
+ * @brief Lee todos los registros almacenados en un archivo binario.
  *
- * @param registros       Arreglo de registros.
- * @param cantidadActual  Número actual de registros almacenados.
- * @param idBorrar        ID del registro que se desea eliminar.
+ * @param registros Arreglo donde se almacenarán los registros leídos.
  *
- * @return Nueva cantidad de registros después de eliminar.
+ * @return Cantidad de registros cargados desde el archivo.
  */
-int bajaRecord(Record registros[], int cantidadActual, int idBorrar) {
-    int indice;
-    int posicionEncontrada = -1;
+int leerRegistrosBinario(Record registros[]) {
+    int cantidadLeida;
+    FILE *archivo;
+    archivo = fopen("registros.bin", "rb");
 
-    // Buscar el ID dentro del vector
-    for (indice = 0; indice < cantidadActual; indice++) {
-        if (registros[indice].id == idBorrar) {
-            posicionEncontrada = indice;
-            break;
-        }
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo registros.bin\n");
+        exit(1);
     }
 
-    // Si no se encontró el registro
-    if (posicionEncontrada == -1) {
-        printf("No se encontro un registro con ese ID.\n");
-        return cantidadActual;
-    }
+    /* Leemos cuántos registros contiene el archivo */
+    fread(&cantidadLeida, sizeof(int), 1, archivo);
 
-    // Compactar el vector moviendo todos a la izquierda
-    for (indice = posicionEncontrada; indice < cantidadActual - 1; indice++) {
-        registros[indice] = registros[indice + 1];
-    }
+    /* Leemos todos los registros */
+    fread(registros, sizeof(Record), cantidadLeida, archivo);
 
-    printf("Registro eliminado correctamente.\n");
+    fclose(archivo);
 
-    return cantidadActual - 1;
-}
-
-/**
- * @brief Modifica los datos de un registro identificado por su ID.
- *
- * @param registros       Arreglo de registros.
- * @param cantidadActual  Número actual de registros.
- * @param idCorregir      ID del registro a modificar.
- */
-void corregirRecord(Record registros[], int cantidadActual, int idCorregir) {
-    int indice;
-    int posicionEncontrada = -1;
-
-    // Buscar registro por ID
-    for (indice = 0; indice < cantidadActual; indice++) {
-        if (registros[indice].id == idCorregir) {
-            posicionEncontrada = indice;
-            break;
-        }
-    }
-
-    if (posicionEncontrada == -1) {
-        printf("No esta el registro con ese ID.\n");
-        return;
-    }
-
-    printf("Nuevo nombre: ");
-    scanf(" %24[^\n]", registros[posicionEncontrada].nombre);
-
-    printf("Nuevos puntos: ");
-    scanf("%d", &registros[posicionEncontrada].puntos);
-
-    printf("Nueva fecha (dd mm aaaa): ");
-    scanf("%d %d %d", &registros[posicionEncontrada].dia, &registros[posicionEncontrada].mes, &registros[posicionEncontrada].anio);
-
-    printf("Se actualizo el registro.\n");
+    return cantidadLeida;
 }
